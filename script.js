@@ -1,62 +1,40 @@
-document.getElementById('postForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  var nickname = document.getElementById('nickname').value;
-  var password = document.getElementById('password').value;
-  var content = document.getElementById('content').value;
-  
-  var post = {
-    nickname: nickname,
-    password: password,
-    content: content
-  };
-  
-  savePost(post);
-  clearForm();
+document.getElementById('writeButton').addEventListener('click', function() {
+  window.location.href = 'write.html';
 });
 
-function savePost(post) {
-  var posts = getSavedPosts();
-  posts.push(post);
-  localStorage.setItem('posts', JSON.stringify(posts));
-  
-  renderPosts();
-}
-
-function getSavedPosts() {
-  var postsString = localStorage.getItem('posts');
-  var posts = JSON.parse(postsString) || [];
-  return posts;
-}
-
 function renderPosts() {
-  var posts = getSavedPosts();
   var postList = document.getElementById('postList');
   postList.innerHTML = '';
   
-  posts.forEach(function(post) {
+  var posts = getSavedPosts();
+  
+  posts.forEach(function(post, index) {
     var postElement = document.createElement('div');
     postElement.classList.add('post');
     
     var titleElement = document.createElement('div');
     titleElement.classList.add('title');
-    titleElement.innerText = post.nickname;
+    titleElement.innerText = post.title;
+    titleElement.setAttribute('data-index', index);
+    titleElement.addEventListener('click', viewPost);
     
-    var contentElement = document.createElement('div');
-    contentElement.classList.add('content');
-    contentElement.innerText = post.content;
+    var detailsElement = document.createElement('div');
+    detailsElement.innerText = '작성자: ' + post.nickname + ' | 작성일자: ' + post.date + ' | 조회수: ' + post.views;
     
     postElement.appendChild(titleElement);
-    postElement.appendChild(contentElement);
+    postElement.appendChild(detailsElement);
     
     postList.appendChild(postElement);
   });
 }
 
-function clearForm() {
-  document.getElementById('nickname').value = '';
-  document.getElementById('password').value = '';
-  document.getElementById('content').value = '';
+function viewPost(event) {
+  var index = event.target.getAttribute('data-index');
+  var posts = getSavedPosts();
+  var post = posts[index];
+  
+  localStorage.setItem('currentPost', JSON.stringify(post));
+  window.location.href = 'post.html';
 }
 
 renderPosts();
