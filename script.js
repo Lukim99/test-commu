@@ -36,7 +36,7 @@ function getPosts() {
     'Authorization': 'Bearer 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'
   };
 
-  return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {
+  return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {}, {
     headers: headers
   })
     .then(response => {
@@ -94,10 +94,10 @@ function savePost(nickname, password, title, content) {
   const encodedContent = btoa(fileContent);
 
   return axios.put('https://api.github.com/repos/Lukim99/test-commu/contents/posts/' + Date.now() + '.json', {
+    headers: headers
+  }, {
     message: 'Add new post',
     content: encodedContent
-  }, {
-    headers: headers
   });
 }
 
