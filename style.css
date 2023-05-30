@@ -6,6 +6,10 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  margin-top: 20px;
+}
+
 form {
   margin-bottom: 20px;
 }
@@ -23,11 +27,6 @@ button {
   margin-top: 10px;
 }
 
-#postList {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
 .post {
   margin-bottom: 20px;
   padding: 10px;
@@ -36,8 +35,15 @@ button {
 
 .post .title {
   font-weight: bold;
+  cursor: pointer;
 }
 
 .post .content {
   margin-top: 5px;
+}
+
+.comment {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
 }
