@@ -1,25 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>게시글 뷰어</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>게시글 뷰어</h1>
-  
-  <div id="postTitle"></div>
+  <h1 id="postTitle"></h1>
   <div id="postDetails"></div>
   <div id="postContent"></div>
-  
-  <h2>댓글</h2>
-  <div id="commentList"></div>
-  
-  <form id="commentForm">
-    <input type="text" id="nickname" placeholder="닉네임" required>
-    <textarea id="commentContent" placeholder="댓글 내용" required></textarea>
-    <button type="submit">댓글 작성</button>
-  </form>
 
-  <script src="post.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
