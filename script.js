@@ -33,7 +33,7 @@ function viewPost(event) {
 
 function getPosts() {
   const headers = {
-    'Authorization': 'Bearer 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'
+    'Authorization': 'Bearer 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'
   };
 
   return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {
@@ -79,7 +79,7 @@ document.getElementById('postForm').addEventListener('submit', function(event) {
 
 function savePost(nickname, password, title, content) {
   const headers = {
-    'Authorization': 'Bearer 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'
+    'Authorization': 'Bearer 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'
   };
 
   const fileContent = JSON.stringify({
