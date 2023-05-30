@@ -93,9 +93,9 @@ function savePost(nickname, password, title, content) {
 
   const encodedContent = btoa(fileContent);
 
-  return axios.put('https://api.github.com/repos/Lukim99/test-commu/contents/posts/' + Date.now() + '.json', {
+  return axios.put(`https://api.github.com/repos/Lukim99/test-commu/contents/posts/${Date.now()}.json`, {
     message: 'Add new post',
-    content: fileContent
+    content: encodedContent
   }, {
     headers: headers
   });
