@@ -33,7 +33,8 @@ function viewPost(event) {
 
 function getPosts() {
   const headers = {
-    'Authorization': 'token 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'
+    Authorization: "Token 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",
+    Accept: "application/vnd.github.nightshade-preview+json"
   };
 
   return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {
