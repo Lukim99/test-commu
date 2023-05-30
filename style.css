@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button {
+  display: block;
+  margin-top: 10px;
+}
+
+#postList {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.post {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.post .title {
+  font-weight: bold;
+}
+
+.post .content {
+  margin-top: 5px;
+}
