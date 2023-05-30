@@ -1,49 +1,4 @@
 // index.html
-document.addEventListener('DOMContentLoaded', function() {
-  renderPosts();
-});
-
-function goToWritePage() {
-  window.location.href = 'write.html';
-}
-
-// post.html
-document.addEventListener('DOMContentLoaded', function() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var postId = urlParams.get('id');
-  if (postId) {
-    getPost(postId)
-      .then(post => {
-        renderPost(post);
-      })
-      .catch(error => {
-        console.error('Error fetching post:', error);
-      });
-  }
-});
-
-function getPosts() {
-  const headers = {
-    'Authorization': 'Bearer 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'
-  };
-
-  return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {
-    headers: headers
-  })
-  .then(response => {
-    return response.data.map(item => {
-      const content = atob(item.content);
-      const post = JSON.parse(content);
-      post.url = item.html_url;
-      return post;
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching posts:', error);
-    return [];
-  });
-}
-
 function renderPosts() {
   var postList = document.getElementById('postList');
   postList.innerHTML = '';
@@ -76,33 +31,32 @@ function viewPost(event) {
   window.location.href = url;
 }
 
-function getPost(postId) {
+function getPosts() {
   const headers = {
     'Authorization': 'Bearer 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'
   };
 
-  return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts/' + postId + '.json', {
+  return axios.get('https://api.github.com/repos/Lukim99/test-commu/contents/posts', {
     headers: headers
   })
-  .then(response => {
-    const content = atob(response.data.content);
-    const post = JSON.parse(content);
-    return post;
-  })
-  .catch(error => {
-    console.error('Error fetching post:', error);
-    return null;
-  });
-}
-
-function renderPost(post) {
-  var postTitle = document.getElementById('postTitle');
-  var postDetails = document.getElementById('postDetails');
-  var postContent = document.getElementById('postContent');
-
-  postTitle.innerText = post.title;
-  postDetails.innerText = '작성자: ' + post.nickname + ' | 작성일자: ' + post.date + ' | 조회수: ' + post.views;
-  postContent.innerText = post.content;
+    .then(response => {
+      const posts = response.data.map(post => {
+        const content = atob(post.content);
+        const parsedContent = JSON.parse(content);
+        return {
+          title: parsedContent.title,
+          nickname: parsedContent.nickname,
+          date: parsedContent.date,
+          views: parsedContent.views,
+          url: post.html_url
+        };
+      });
+      return posts;
+    })
+    .catch(error => {
+      console.error('Error fetching posts:', error);
+      return [];
+    });
 }
 
 // write.html
@@ -114,40 +68,42 @@ document.getElementById('postForm').addEventListener('submit', function(event) {
   var title = document.getElementById('title').value;
   var content = document.getElementById('content').value;
 
-  var date = new Date().toLocaleString();
+  savePost(nickname, password, title, content)
+    .then(() => {
+      window.location.href = 'index.html';
+    })
+    .catch(error => {
+      console.error('Error saving post:', error);
+    });
+});
 
-  var post = {
+function savePost(nickname, password, title, content) {
+  const headers = {
+    'Authorization': 'Bearer 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'
+  };
+
+  const fileContent = JSON.stringify({
     nickname: nickname,
     password: password,
     title: title,
     content: content,
-    date: date,
+    date: new Date().toISOString(),
     views: 0
-  };
+  });
 
-  savePost(post)
-    .then(response => {
-      console.log('Post created successfully:', response.data);
-      window.location.href = 'index.html';
-    })
-    .catch(error => {
-      console.error('Error creating post:', error);
-    });
-});
-
-function savePost(post) {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer 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'
-  };
-
-  const content = JSON.stringify(post);
-  const encodedContent = btoa(content);
+  const encodedContent = btoa(fileContent);
 
   return axios.put('https://api.github.com/repos/Lukim99/test-commu/contents/posts/' + Date.now() + '.json', {
-    message: 'Create new post',
+    message: 'Add new post',
     content: encodedContent
   }, {
     headers: headers
   });
 }
+
+// Common
+function goToWritePage() {
+  window.location.href = 'write.html';
+}
+
+renderPosts();
