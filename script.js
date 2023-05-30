@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
   renderPosts();
 });
 
+function goToWritePage() {
+  window.location.href = 'write.html';
+}
+
+
 // post.html
 document.addEventListener('DOMContentLoaded', function() {
   var urlParams = new URLSearchParams(window.location.search);
