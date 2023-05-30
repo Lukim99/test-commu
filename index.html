@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>게시판</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>게시판</h1>
+  
+  <form id="postForm">
+    <input type="text" id="nickname" placeholder="닉네임" required>
+    <input type="password" id="password" placeholder="비밀번호" required>
+    <textarea id="content" placeholder="게시글 내용" required></textarea>
+    <button type="submit">작성</button>
+  </form>
+  
+  <div id="postList"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
